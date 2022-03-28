@@ -4,10 +4,10 @@ import math
 class Window(QWidget):
     def __init__(self):
         QWidget.__init__(self)
+        self.setWindowTitle('Калькулятор')
         layout = QGridLayout()
         self.setLayout(layout)
         self.st = QLineEdit('')
-        self.setWindowTitle('Калькулятор')
         layout.addWidget(self.st, 0, 6)
         button = QPushButton('0')
         button.clicked.connect(lambda: self._clicked(0))
