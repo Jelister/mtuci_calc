@@ -78,21 +78,45 @@ class Window(QWidget):
     def _clicked(self, n):
         if n == '=':
             if self.op == '+':
-                self.st.setText(str(self.num1+float(self.st.text())))
+                if int(self.num1+float(self.st.text())) == self.num1+float(self.st.text()):
+                    self.st.setText(str(int(self.num1+float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1+float(self.st.text())))
             elif self.op == '-':
-                self.st.setText(str(self.num1-float(self.st.text())))
+                if int(self.num1-float(self.st.text())) == self.num1-float(self.st.text()):
+                    self.st.setText(str(int(self.num1-float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1-float(self.st.text())))
             elif self.op == '*':
-                self.st.setText(str(self.num1*float(self.st.text())))
+                if int(self.num1*float(self.st.text())) == self.num1*float(self.st.text()):
+                    self.st.setText(str(int(self.num1*float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1*float(self.st.text())))
             elif self.op == '/':
-                self.st.setText(str(self.num1/float(self.st.text())))
+                if int(self.num1/float(self.st.text())) == self.num1/float(self.st.text()):
+                    self.st.setText(str(int(self.num1/float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1/float(self.st.text())))
             elif self.op == '//':
-                self.st.setText(str(self.num1//float(self.st.text())))
+                if int(self.num1//float(self.st.text())) == self.num1//float(self.st.text()):
+                    self.st.setText(str(int(self.num1//float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1//float(self.st.text())))
             elif self.op == '%':
-                self.st.setText(str(self.num1%float(self.st.text())))
+                if int(self.num1%float(self.st.text())) == self.num1%float(self.st.text()):
+                    self.st.setText(str(int(self.num1%float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1%float(self.st.text())))
             elif self.op == '^':
-                self.st.setText(str(self.num1**float(self.st.text())))
+                if int(self.num1**float(self.st.text())) == self.num1**float(self.st.text()):
+                    self.st.setText(str(int(self.num1**float(self.st.text()))))
+                else:
+                    self.st.setText(str(self.num1**float(self.st.text())))
             elif self.op == 'log x(y)':
-                self.st.setText(str(math.log(self.num1, float(self.st.text()))))
+                if int(math.log(self.num1, float(self.st.text()))) == math.log(self.num1, float(self.st.text())):
+                    self.st.setText(str(int(math.log(self.num1, float(self.st.text())))))
+                else:
+                    self.st.setText(str(math.log(self.num1, float(self.st.text()))))
         elif n == 'Del':
             self.num1 = None
             self.st.setText('')
