@@ -78,6 +78,9 @@ class Window(QWidget):
         button = QPushButton('!')
         button.clicked.connect(lambda: self._clicked('!'))
         layout.addWidget(button, 0, 2)
+        button = QPushButton('x^(1/y)')
+        button.clicked.connect(lambda: self._clicked('x^(1/y)'))
+        layout.addWidget(button, 0, 3)
     def _clicked(self, n):
         if n == '=':
             if self.op == '+':
@@ -120,6 +123,11 @@ class Window(QWidget):
                     self.st.setText(str(int(math.log(abs(self.num1), abs(float(self.st.text()))))))
                 else:
                     self.st.setText(str(math.log(abs(self.num1), abs(float(self.st.text())))))
+            elif self.op == 'x^(1/y)':
+                if int(abs(self.num1)**(abs(1/float(self.st.text())))) == abs(self.num1)**abs(1/float(self.st.text())):
+                    self.st.setText(str(int(abs(self.num1)**(abs(1/float(self.st.text()))))))
+                else:
+                    self.st.setText(str(abs(self.num1)**abs(1/float(self.st.text()))))
         elif n == 'Del':
             self.num1 = None
             self.st.setText('')
@@ -136,6 +144,10 @@ class Window(QWidget):
             else:
                 s =self.st.text()
                 self.st.setText(s+str(n))
+        elif n == 'x^(1/y)':
+            self.num1 = float(self.st.text())
+            self.op = n
+            self.st.setText('')
         else:
             s =self.st.text()
             self.st.setText(s+str(n))
@@ -203,6 +215,15 @@ class Window(QWidget):
                 self.op = n
                 self.st.setText('')
         elif n == 'log x(y)':
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
+        elif n == 'x^(1/y)':
             if len(self.st.text()) != 0:
                 self.num1 = float(self.st.text())
                 self.op = n
