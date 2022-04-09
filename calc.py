@@ -75,6 +75,9 @@ class Window(QWidget):
         button = QPushButton('<--')
         button.clicked.connect(lambda: self._clicked('<--'))
         layout.addWidget(button, 0, 1)
+        button = QPushButton('!')
+        button.clicked.connect(lambda: self._clicked('!'))
+        layout.addWidget(button, 0, 2)
     def _clicked(self, n):
         if n == '=':
             if self.op == '+':
@@ -113,15 +116,20 @@ class Window(QWidget):
                 else:
                     self.st.setText(str(self.num1**float(self.st.text())))
             elif self.op == 'log x(y)':
-                if int(math.log(self.num1, float(self.st.text()))) == math.log(self.num1, float(self.st.text())):
-                    self.st.setText(str(int(math.log(self.num1, float(self.st.text())))))
+                if int(math.log(abs(self.num1), abs(float(self.st.text())))) == math.log(abs(self.num1), abs(float(self.st.text()))):
+                    self.st.setText(str(int(math.log(abs(self.num1), abs(float(self.st.text()))))))
                 else:
-                    self.st.setText(str(math.log(self.num1, float(self.st.text()))))
+                    self.st.setText(str(math.log(abs(self.num1), abs(float(self.st.text())))))
         elif n == 'Del':
             self.num1 = None
             self.st.setText('')
         elif n == '<--':
             self.st.setText(self.st.text()[0:-1])
+        elif n == '!':
+            if int(self.st.text()) >= 0:
+                self.st.setText(str(math.factorial(abs(int(self.st.text())))))
+            else:
+                self.st.setText('-'+str(math.factorial(abs(int(self.st.text())))))
         elif n == '.':
             if len(self.st.text()) == 0:
                 self.st.setText('0.')
@@ -133,9 +141,14 @@ class Window(QWidget):
             self.st.setText(s+str(n))
     def _func(self, n):
         if n == '+':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
         elif n == '-':
             if len(self.st.text()) == 0:
                 self.st.setText('-')
@@ -144,29 +157,60 @@ class Window(QWidget):
                 self.op = n
                 self.st.setText('')
         elif n == '/':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
         elif n == '*':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
+
         elif n == '//':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
         elif n == '%':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
         elif n == '^':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
         elif n == 'log x(y)':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+            if len(self.st.text()) != 0:
+                self.num1 = float(self.st.text())
+                self.op = n
+                self.st.setText('')
+            else:
+                self.num1 = 0
+                self.op = n
+                self.st.setText('')
 app = QApplication(sys.argv)
 screen = Window()
 screen.show()
