@@ -78,8 +78,8 @@ class Window(QWidget):
         button = QPushButton('!')
         button.clicked.connect(lambda: self._clicked('!'))
         layout.addWidget(button, 0, 2)
-        button = QPushButton('x^(1/y)')
-        button.clicked.connect(lambda: self._clicked('x^(1/y)'))
+        button = QPushButton('sqrt(x)')
+        button.clicked.connect(lambda: self._clicked('sqrt(x)'))
         layout.addWidget(button, 0, 3)
     def _clicked(self, n):
         if n == '=':
@@ -99,10 +99,13 @@ class Window(QWidget):
                 else:
                     self.st.setText(str(self.num1*float(self.st.text())))
             elif self.op == '/':
-                if int(self.num1/float(self.st.text())) == self.num1/float(self.st.text()):
-                    self.st.setText(str(int(self.num1/float(self.st.text()))))
+                if int(self.st.text()) != 0:
+                    if int(self.num1/float(self.st.text())) == self.num1/float(self.st.text()):
+                        self.st.setText(str(int(self.num1/float(self.st.text()))))
+                    else:
+                        self.st.setText(str(self.num1/float(self.st.text())))
                 else:
-                    self.st.setText(str(self.num1/float(self.st.text())))
+                    self.st.setText('err.')
             elif self.op == '//':
                 if int(self.num1//float(self.st.text())) == self.num1//float(self.st.text()):
                     self.st.setText(str(int(self.num1//float(self.st.text()))))
@@ -123,11 +126,6 @@ class Window(QWidget):
                     self.st.setText(str(int(math.log(abs(self.num1), abs(float(self.st.text()))))))
                 else:
                     self.st.setText(str(math.log(abs(self.num1), abs(float(self.st.text())))))
-            elif self.op == 'x^(1/y)':
-                if int(abs(self.num1)**(abs(1/float(self.st.text())))) == abs(self.num1)**abs(1/float(self.st.text())):
-                    self.st.setText(str(int(abs(self.num1)**(abs(1/float(self.st.text()))))))
-                else:
-                    self.st.setText(str(abs(self.num1)**abs(1/float(self.st.text()))))
         elif n == 'Del':
             self.num1 = None
             self.st.setText('')
@@ -144,10 +142,14 @@ class Window(QWidget):
             else:
                 s =self.st.text()
                 self.st.setText(s+str(n))
-        elif n == 'x^(1/y)':
-            self.num1 = float(self.st.text())
-            self.op = n
-            self.st.setText('')
+        elif n == 'sqrt(x)':
+            if int(self.st.text()) >= 0:
+                if int(math.sqrt(float(abs(int(self.st.text()))))) != math.sqrt(float(abs(int(self.st.text())))):
+                    self.st.setText(str(math.sqrt(float(abs(int(self.st.text()))))))
+                else:
+                    self.st.setText(str(int(math.sqrt(float(abs(int(self.st.text())))))))
+            else:
+                self.st.setText('err.')
         else:
             s =self.st.text()
             self.st.setText(s+str(n))
@@ -169,14 +171,17 @@ class Window(QWidget):
                 self.op = n
                 self.st.setText('')
         elif n == '/':
-            if len(self.st.text()) != 0:
-                self.num1 = float(self.st.text())
-                self.op = n
-                self.st.setText('')
+            if self.st.text() != 0:
+                if len(self.st.text()) != 0:
+                    self.num1 = float(self.st.text())
+                    self.op = n
+                    self.st.setText('')
+                else:
+                    self.num1 = 0
+                    self.op = n
+                    self.st.setText('')
             else:
-                self.num1 = 0
-                self.op = n
-                self.st.setText('')
+                self.st.setText('err.')
         elif n == '*':
             if len(self.st.text()) != 0:
                 self.num1 = float(self.st.text())
@@ -223,15 +228,16 @@ class Window(QWidget):
                 self.num1 = 0
                 self.op = n
                 self.st.setText('')
-        elif n == 'x^(1/y)':
-            if len(self.st.text()) != 0:
-                self.num1 = float(self.st.text())
-                self.op = n
-                self.st.setText('')
+        elif n == 'sqrt(x)':
+            if self.st.text() >= 0:
+                if len(self.st.text()) != 0:
+                    self.st.setText(str(math.sqrt(self.st.text())))
+                else:
+                    self.num1 = 0
+                    self.op = n
+                    self.st.setText('')
             else:
-                self.num1 = 0
-                self.op = n
-                self.st.setText('')
+                self.st.setText('err.')
 app = QApplication(sys.argv)
 screen = Window()
 screen.show()
